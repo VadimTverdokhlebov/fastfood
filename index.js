@@ -1,12 +1,11 @@
-const app = require('express')()
+const express = require('express')
+const app = express()
+const handlebars = require('express-handlebars')
 
-const PORT = 3000
+const PORT = 8000
 const HOST = 'localhost'
 
-app.get('/', (req, res) => {
-    res.status(200).type('text/plain')
-    res.send('Home page')
-})
+app.use(express.static(`${__dirname}/public`));
 
 app.listen(PORT, HOST, function () {
     console.log(`Server listens http://${HOST}:${PORT}`)
