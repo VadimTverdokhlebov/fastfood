@@ -1,0 +1,213 @@
+html {
+    min-height: 100%;
+    font-family: sans-serif;
+    background-image: url(icons/fon-serii-metallik-78.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+:root {
+    --dark-yelloy-color:rgb(221, 186, 27);
+    --light-yelloy-color:rgb(243, 240, 36);
+    --gray-text-color:rgb(65, 62, 62);
+    --light-blue-color:rgb(30, 109, 255);
+}
+#title {
+    font-size: 46px;
+    font-weight: normal;
+    text-align: center;
+}
+.page {
+    padding: 15px;
+    display: flex;
+}
+
+/*Стили меню*/
+
+.menu {
+    margin: 50px 0 50px 0;
+    padding: 0;
+    width: 280px;
+    border-radius: 10px;
+    list-style: none;
+    background-color: white;
+    box-shadow: 0 4px 6px darkgrey;
+}
+.menu li a {
+    padding: 20px;
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: .2s;
+}
+.menu li {
+    color: var(--gray-text-color);
+    display: block;
+}
+.menu li :hover {
+    color: white;
+    background-color: var(--light-yelloy-color);
+}
+
+/*Стили корзины*/
+
+.basket {
+    width: 280px;
+    border-radius: 10px;
+    background-color: var(--light-yelloy-color);
+    z-index: -1;
+}
+.basket__head {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--dark-yelloy-color);
+    border-bottom: 2px solid darkgoldenrod;
+    box-shadow: 0 4px 6px darkgrey;
+}
+#basket__icon {
+    width: 48px;
+    height: 48px;
+}
+#basket__name {
+    font-size: 36px;
+    color: var(--gray-text-color);
+    font-weight:bolder;
+}
+.basket__product {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom:1px solid  darkgoldenrod;
+    background-color: var(--light-yelloy-color);
+}
+.basket__total {
+    margin-top: 10px;
+    padding: 0px;
+}
+.basket__botton__order {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width:200px;
+    height: 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    font-weight:bolder;
+    color: white;
+    box-shadow: 0 2px 4px darkgoldenrod;
+    background-color:darkgray;
+}
+.basket__order {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    background-color: var(--light-yelloy-color);
+}
+.basket__botton__order:hover {
+    color: white;
+    background-color: var(--dark-yelloy-color);
+}
+
+/*Стили блока с товаром*/
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+.product {
+    margin-top: 50px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    width: 300px;
+    height: 600px;
+}
+.food__picture {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    display: block;
+    border-radius: 50%;
+    border: 10px solid  var(--light-yelloy-color);
+    background-color: white;
+}
+.food__logo {
+   width: 300px;
+}
+.food__name {
+    font-size: 24px;
+    text-align: center;
+}
+.food__price {
+    font-size: 20px;
+    text-align: center; 
+    color: rgb(151, 25, 25);
+}
+.food__count {
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: center;
+}
+.food__line {
+    width: 300px;
+    height: 60px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+.food__structure {
+    font-size: 14px;
+    display: table;
+    text-align: center;
+    border-bottom: 1px solid var(--light-blue-color);
+    color: var(--light-blue-color);
+}
+.form__add__basket{
+    text-align: center;
+}
+.food__counter{
+    margin: 0 auto;
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+}
+.quantity {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    border: none;
+}
+.botton__minus {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+}
+.botton__plus {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+}
+.botton__buy {
+    width:200px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    font-weight:bolder;
+    color: var(--gray-text-color);
+    box-shadow: 0 2px 4px darkgoldenrod;
+    background-color:var(--light-yelloy-color);
+}
+.botton__buy:hover{
+    color: white;
+    background-color:var(--dark-yelloy-color);
+}
