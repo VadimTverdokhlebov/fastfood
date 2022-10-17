@@ -1,21 +1,25 @@
 html {
-    min-height: 100%;
-    font-family: sans-serif;
-    background-image: url(icons/fon-serii-metallik-78.jpg);
+    /*min-height: 100%;
+    background-image: url(i/fon-serii-metallik-78.jpg);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover;*/
+    font-family: sans-serif;
+    background-color: lightgray;
 }
+
 :root {
-    --dark-yelloy-color:rgb(221, 186, 27);
-    --light-yelloy-color:rgb(243, 240, 36);
-    --gray-text-color:rgb(65, 62, 62);
-    --light-blue-color:rgb(30, 109, 255);
+    --dark-yelloy-color: rgb(221, 186, 27);
+    --light-yelloy-color: rgb(243, 240, 36);
+    --gray-text-color: rgb(65, 62, 62);
+    --light-blue-color: rgb(30, 109, 255);
 }
+
 #title {
     font-size: 46px;
     font-weight: normal;
     text-align: center;
 }
+
 .page {
     padding: 15px;
     display: flex;
@@ -32,7 +36,8 @@ html {
     background-color: white;
     box-shadow: 0 4px 6px darkgrey;
 }
-.menu li a {
+
+.category {
     padding: 20px;
     font-size: 24px;
     display: block;
@@ -41,10 +46,12 @@ html {
     color: black;
     transition: .2s;
 }
+
 .menu li {
     color: var(--gray-text-color);
     display: block;
 }
+
 .menu li :hover {
     color: white;
     background-color: var(--light-yelloy-color);
@@ -52,13 +59,14 @@ html {
 
 /*Стили корзины*/
 
-.basket {
+#basket {
     width: 280px;
     border-radius: 10px;
     background-color: var(--light-yelloy-color);
     z-index: -1;
 }
-.basket__head {
+
+#basketHead {
     height: 100px;
     display: flex;
     align-items: center;
@@ -67,58 +75,76 @@ html {
     border-bottom: 2px solid darkgoldenrod;
     box-shadow: 0 4px 6px darkgrey;
 }
-#basket__icon {
+
+#basketIcon {
     width: 48px;
     height: 48px;
 }
-#basket__name {
+
+#basketName {
     font-size: 36px;
     color: var(--gray-text-color);
-    font-weight:bolder;
+    font-weight: bolder;
 }
-.basket__product {
+
+#basketTitle {
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom:1px solid  darkgoldenrod;
+    border-bottom: 1px solid darkgoldenrod;
     background-color: var(--light-yelloy-color);
 }
-.basket__total {
+
+.basketProduct {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgoldenrod;
+    background-color: var(--light-yelloy-color);
+}
+
+.basketTotal {
     margin-top: 10px;
     padding: 0px;
 }
-.basket__botton__order {
+
+.basketBottonOrder {
     margin-top: 10px;
     margin-bottom: 20px;
-    width:200px;
+    width: 200px;
     height: 30px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    font-weight:bolder;
+    font-weight: bolder;
     color: white;
     box-shadow: 0 2px 4px darkgoldenrod;
-    background-color:darkgray;
+    background-color: darkgray;
 }
-.basket__order {
+
+.basketOrder {
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
     background-color: var(--light-yelloy-color);
 }
-.basket__botton__order:hover {
+
+.basketBottonOrder:hover {
     color: white;
     background-color: var(--dark-yelloy-color);
 }
 
 /*Стили блока с товаром*/
 
-.content {
+#content {
     display: flex;
     flex-wrap: wrap;
 }
+
 .product {
     margin-top: 50px;
     margin-bottom: 15px;
@@ -126,88 +152,107 @@ html {
     width: 300px;
     height: 600px;
 }
-.food__picture {
+
+.foodPicture {
     margin: auto;
     width: 200px;
     height: 200px;
     display: block;
     border-radius: 50%;
-    border: 10px solid  var(--light-yelloy-color);
+    border: 10px solid var(--light-yelloy-color);
     background-color: white;
 }
-.food__logo {
-   width: 300px;
+
+.foodLogo {
+    width: 300px;
 }
-.food__name {
+
+.foodName {
+    padding-top: 20px;
     font-size: 24px;
+    height: 80px;
     text-align: center;
 }
-.food__price {
+
+.foodPrice {
     font-size: 20px;
-    text-align: center; 
+    text-align: center;
     color: rgb(151, 25, 25);
 }
-.food__count {
+
+.foodCount {
     margin: 0 auto;
     font-size: 16px;
     text-align: center;
 }
-.food__line {
+
+.foodLine {
     width: 300px;
     height: 60px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
 }
-.food__structure {
+
+.foodStructure {
     font-size: 14px;
     display: table;
     text-align: center;
     border-bottom: 1px solid var(--light-blue-color);
     color: var(--light-blue-color);
 }
-.form__add__basket{
+
+.formAddBasket {
     text-align: center;
 }
-.food__counter{
+
+.foodCounter {
     margin: 0 auto;
     padding: 10px;
     width: 200px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    
+
 }
+
 .quantity {
-    width: 40px;
-    height: 20px;
+    all: unset;
+    -moz-appearance: textfield;
+    width: 3em;
     text-align: center;
-    border-radius: 3px;
-    border: none;
 }
-.botton__minus {
+
+.quantity::-webkit-inner-spin-button {
+    display: none;
+}
+
+.bottonMinus {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: white;
 }
-.botton__plus {
+
+.bottonPlus {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: white;
 }
-.botton__buy {
-    width:200px;
+
+.bottonBuy {
+    width: 200px;
     height: 30px;
     font-size: 16px;
     border-radius: 5px;
     border: none;
-    font-weight:bolder;
+    font-weight: bolder;
     color: var(--gray-text-color);
     box-shadow: 0 2px 4px darkgoldenrod;
-    background-color:var(--light-yelloy-color);
+    background-color: var(--light-yelloy-color);
 }
-.botton__buy:hover{
+
+.bottonBuy:hover {
     color: white;
-    background-color:var(--dark-yelloy-color);
+    background-color: var(--dark-yelloy-color);
 }

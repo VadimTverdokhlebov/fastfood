@@ -10,47 +10,39 @@
     <body>
         <h1 id="title">СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА</h1>
         <div class="page">
-            <nav class="sidebar">
+            <nav id="sidebar">
                 <ul class="menu">
-                    <li><a href="" id="pizza">Пицца</a></li>
-                    <li><a href="" id="">Шаурма</a></li>
-                    <li><a href="" id="sandwiches">Сендвичи</a></li>
-                    <li><a href="" id="burgers">Бургеры</a></li>
-                    <li><a href="">Курица & Картофель</a></li>
-                    <li><a href="">Тортилья & Салаты</a></li>
-                    <li><a href="">Напитки & Десерты</a></li>
+                    <li><a class = "category" id="pizza">Пицца</a></li>
+                    <li><a class = "category" id="shaurma">Шаурма</a></li>
+                    <li><a class = "category" id="sandwiches">Сендвичи</a></li>
+                    <li><a class = "category" id="burgers">Бургеры</a></li>
+                    <li><a class = "category" id="chicken">Курица & Картофель</a></li>
+                    <li><a class = "category" id="salads">Тортилья & Салаты</a></li>
+                    <li><a class = "category" id="drinks">Напитки & Десерты</a></li>
                 </ul>
-                <div class="basket">
-                    <div class="basket__head">
-                        <img id="basket__icon" src="icons/shoppingbasket_83998.png">
-                        <p id="basket__name">Корзина</p>
+                
+                <div id="basket">
+                    <div id="basketHead">
+                        <img id="basketIcon" src="i/shoppingbasket_83998.png">
+                        <p id="basketName">Корзина</p>
                     </div>
-                    <div class="basket__product">
+                    <div id="basketTitle">
                         <p>Название</p>
                         <p>Количество</p>
                     </div>
-                    <div class="basket__product">
-                        <p>Блин фирменный Spot</p>
-                        <p>1</p>
-                    </div>
-                    <div class="basket__product">
-                        <p>Сабвей клаб</p>
-                        <p>1</p>
-                    </div>
-                    <div class="basket__order">
-                        <div class="basket__total"><p>Итого: 0 руб.</p></div>
+                    <div class="basketOrder">
+                        <div class="basketTotal"><p>Итого: 0 руб.</p></div>
                         
                         <form>
-                            <input class="basket__botton__order" type="submit" value="ОФОРМИТЬ ЗАКАЗ">
+                            <input class="basketBottonOrder" type="submit" value="ОФОРМИТЬ ЗАКАЗ">
                         </form>
                     </div>
                 </div>
             </nav>
-            <article class="content">
-                <%- include('./product_cart')%>
-            </article>
+            <div id="content">
+                
+            </div>
         </div>
     </body>
-    <script src="./scripts/counter.js"></script>
     <script src="./scripts/set_category.js"></script>
 </html>
