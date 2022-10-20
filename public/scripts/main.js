@@ -1,28 +1,7 @@
 "use strict";
-const basket = [
-    {
-        "name": "Овощной",
-        "id": 0,
-        "quantity": 1
-    },
-    {
-        "name": "Индейка",
-        "id": 2,
-        "quantity": 2
-    },
-    {
-        "name": "Ветчина",
-        "id": 3,
-        "quantity": 3
-    },
-    {
-        "name": "Индейка и ветчина",
-        "id": 4,
-        "quantity": 1
-    },]
+const basket = [];
 
 showSelectedProductCategory();
-
 showProductFromBasket();
 
 async function getMenuProduct() {
@@ -107,8 +86,17 @@ async function showProducts(categoryId) {
 }
 
 function showProductFromBasket() {
+
+    let div = document.createElement('div');
+
+    basketContainer.remove();
+
+    div.id = "basketContainer";
+
+    basketTitle.after(div);
+
     for (let key in basket) {
-        basketTitle.insertAdjacentHTML("afterend", /*html*/`
+        basketContainer.insertAdjacentHTML("afterbegin", /*html*/`
         <div class="basketProduct" id="positionProductInBasket${basket[key].id}">
             <p>${basket[key].name}</p>
             <p>${basket[key].quantity}</p>
@@ -117,27 +105,73 @@ function showProductFromBasket() {
             </botton>
         </div>
         `);
+
     }
 }
 
-function removeProductInBasket(id){
-    for(let key in basket){
-        if(basket[key].id === id){
-            delete basket[key];
-            document.getElementById(`positionProductInBasket${id}`).remove();
-            console.log(basket);
+function removeProductInBasket(id) {
+    for (let key in basket) {
+        if (basket[key].id === id) {
+            let index = basket.indexOf(basket[key]);
+            if (index > -1) {
+                basket.splice(index, 1);
+                document.getElementById(`positionProductInBasket${id}`).remove();
+            }
         }
     }
 }
 
-function getQuantityProduct(id){
+function getQuantityProduct(id) {
     let quantity = document.getElementById(id).value;
     return quantity;
 }
 
-async function addProductInBasket(id, quantity) {
+async function getElementMenuProduct(id, quantity) {
     let menu = await getMenuProduct();
-    console.log(quantity)
-    console.log(id)
+    for (let key in menu) {
+        if (menu[key].id === id) {
+            let result = menu[key];
+            result.quantity = Number(quantity);
+            return result;
+        }
+    }
+}
+
+function checkProductInBasket(id) {
+    if (basket.length > 0) {
+        for (let key in basket) {
+            if (basket[key].id === id) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function setQuantityProductInBasket(id, quantity) {
+    for (let key in basket) {
+        if (basket[key].id === id) {
+            basket[key].quantity += Number(quantity);
+            break;
+        }
+    }
+}
+
+async function addProductInBasket(id, quantity) {
+
+    let product = await getElementMenuProduct(id, quantity);
+    let productInBasket = checkProductInBasket(id);
+
+    if (productInBasket == true) {
+
+        setQuantityProductInBasket(id, quantity);
+        showProductFromBasket();
+
+    } else {
+
+        basket.push(product);
+        showProductFromBasket();
+        
+    }
 }
 
