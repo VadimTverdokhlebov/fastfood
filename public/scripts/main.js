@@ -2,7 +2,7 @@
 const basket = [];
 
 showSelectedProductCategory();
-showProductFromBasket();
+showBasket();
 
 async function getMenuProduct() {
 
@@ -27,7 +27,7 @@ function showSelectedProductCategory() {
 
     let categoriesMenu = document.querySelectorAll('.category');
     let defaultCategoryId = "pizza";
-
+    
     for (let category of categoriesMenu) {
         category.addEventListener('click', function () {
             showProducts(category.id);
@@ -39,13 +39,12 @@ function showSelectedProductCategory() {
 
 async function showProducts(categoryId) {
 
+    content.remove();
+
     let menu = await getMenuProduct();
     let div = document.createElement('div');
 
-    content.remove();
-
     div.id = "content";
-
     sidebar.after(div);
 
     for (let key in menu) {
@@ -66,46 +65,87 @@ async function showProducts(categoryId) {
 
                 <form class="formAddBasket" id="addBasket" method="POST">
                     <div class="foodCounter">
-                        <botton type="botton" onclick="this.nextElementSibling.stepDown()">
-                            <img alt="minus" src="i/minus.png" class="bottonMinus"/>
-                        </botton>
+                        <button type="button" onclick="this.nextElementSibling.stepDown()">
+                            <img alt="minus" src="i/minus.png" class="buttonMinus"/>
+                        </button>
 
                         <input class="quantity" id="quantity${menu[key].id}" type="number" min="1" max="20" value="1" readonly>
 
-                        <botton type="botton" onclick="this.previousElementSibling.stepUp()">
-                            <img alt="plus" src="i/plus.png" class="bottonPlus"/>
-                        </botton>
+                        <button type="button" onclick="this.previousElementSibling.stepUp()">
+                            <img alt="plus" src="i/plus.png" class="buttonPlus"/>
+                        </button>
                     </div>
-                    <input class="bottonBuy" type="button" value = "В КОРЗИНУ" 
-                        onclick = "addProductInBasket(${menu[key].id}, getQuantityProduct('quantity${menu[key].id}'))">
+                    <input class="buttonBuy" type="button" value = "В КОРЗИНУ" 
+                        onclick = "addProductInBasket(${menu[key].id}, ${categoryId}, getQuantityProduct('quantity${menu[key].id}'))">
                 </form>
 
             </div>`);
         }
     }
 }
+function showBasket() {
+
+    showProductFromBasket();
+    showSumOrder();
+}
+
+function showSumOrder() {
+
+    basketTotal.remove();
+
+    let sum = getSumOrder();
+    let div = document.createElement('div');
+
+    div.id = "basketTotal";
+    basketOrder.prepend(div);
+
+    basketTotal.insertAdjacentHTML("afterbegin", /*html*/ `<p> Итого: ${sum} руб. </p>` );
+}
 
 function showProductFromBasket() {
 
-    let div = document.createElement('div');
-
     basketContainer.remove();
 
-    div.id = "basketContainer";
+    let div = document.createElement('div');
 
+    div.id = "basketContainer";
     basketTitle.after(div);
 
     for (let key in basket) {
         basketContainer.insertAdjacentHTML("afterbegin", /*html*/`
         <div class="basketProduct" id="positionProductInBasket${basket[key].id}">
+
+            <button type="button" id="idProductInBasket${basket[key].id}" onclick="removeProductInBasket(${basket[key].id})">
+                <img src="i/vcsconflicting_93497.png" class="buttonDelete"/>
+            </button>
+            
             <p>${basket[key].name}</p>
-            <p>${basket[key].quantity}</p>
-            <botton type="botton" id="idProductInBasket${basket[key].id}" onclick="removeProductInBasket(${basket[key].id})">
-                <img src="i/minus.png" class="bottonMinus"/>
-            </botton>
+            
+            <button type="button" onclick="setQuantityProductInBasket(${basket[key].id}, -1)">
+                <img alt="minus" src="i/minus.png" class="buttonMinus"/>
+            </button>
+
+                <input class="quantity" type="number" min="1" max="20" value="${basket[key].quantity}" readonly>
+
+            <button type="button" onclick="setQuantityProductInBasket(${basket[key].id}, 1)">
+                <img alt="plus" src="i/plus.png" class="buttonPlus"/>
+            </button>
+
         </div>
         `);
+    }
+}
 
+function setQuantityProductInBasket(id, step){
+    for (let key in basket) {
+        if (basket[key].id === id) {
+            basket[key].quantity += Number(step);
+            if(basket[key].quantity <= 0) {
+                removeProductInBasket(id);
+            }
+            showBasket();
+            break;
+        }
     }
 }
 
@@ -115,7 +155,7 @@ function removeProductInBasket(id) {
             let index = basket.indexOf(basket[key]);
             if (index > -1) {
                 basket.splice(index, 1);
-                document.getElementById(`positionProductInBasket${id}`).remove();
+                showBasket();
             }
         }
     }
@@ -148,30 +188,43 @@ function checkProductInBasket(id) {
     return false;
 }
 
-function setQuantityProductInBasket(id, quantity) {
+function addQuantityProductInBasket(id, quantity) {
     for (let key in basket) {
         if (basket[key].id === id) {
             basket[key].quantity += Number(quantity);
+            showBasket();
             break;
         }
     }
 }
 
-async function addProductInBasket(id, quantity) {
-
+async function addProductInBasket(id, category, quantity) {
     let product = await getElementMenuProduct(id, quantity);
     let productInBasket = checkProductInBasket(id);
+    
+    if (category.id == 'sandwiches'){
+        alert(category.id);
 
-    if (productInBasket == true) {
+    } else if (productInBasket == true) {
 
-        setQuantityProductInBasket(id, quantity);
-        showProductFromBasket();
-
+        addQuantityProductInBasket(id, quantity);
+        showBasket();
+        
     } else {
 
         basket.push(product);
-        showProductFromBasket();
-        
+        showBasket();
     }
 }
+
+function getSumOrder() {
+    let sum = 0;
+    if(basket.length > 0){
+        for (let key in basket){
+            sum += basket[key].quantity * basket[key].price;
+        }
+    } 
+    return sum; 
+}
+
 

@@ -7,6 +7,15 @@ html {
     background-color: lightgray;
 }
 
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 :root {
     --dark-yelloy-color: rgb(221, 186, 27);
     --light-yelloy-color: rgb(243, 240, 36);
@@ -43,6 +52,7 @@ html {
     display: block;
     text-align: center;
     text-decoration: none;
+    cursor: pointer;
     color: black;
     transition: .2s;
 }
@@ -60,10 +70,10 @@ html {
 /*Стили корзины*/
 
 #basket {
+    position: sticky;
     width: 280px;
     border-radius: 10px;
     background-color: var(--light-yelloy-color);
-    z-index: -1;
 }
 
 #basketHead {
@@ -107,7 +117,7 @@ html {
     background-color: var(--light-yelloy-color);
 }
 
-.basketTotal {
+#basketTotal {
     margin-top: 10px;
     padding: 0px;
 }
@@ -126,7 +136,7 @@ html {
     background-color: darkgray;
 }
 
-.basketOrder {
+#basketOrder {
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
@@ -136,6 +146,13 @@ html {
 .basketBottonOrder:hover {
     color: white;
     background-color: var(--dark-yelloy-color);
+}
+
+.buttonDelete {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
 }
 
 /*Стили блока с товаром*/
@@ -226,21 +243,21 @@ html {
     display: none;
 }
 
-.bottonMinus {
+.buttonMinus {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: white;
 }
 
-.bottonPlus {
+.buttonPlus {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: white;
 }
 
-.bottonBuy {
+.buttonBuy {
     width: 200px;
     height: 30px;
     font-size: 16px;
@@ -252,7 +269,7 @@ html {
     background-color: var(--light-yelloy-color);
 }
 
-.bottonBuy:hover {
+.buttonBuy:hover {
     color: white;
     background-color: var(--dark-yelloy-color);
 }
