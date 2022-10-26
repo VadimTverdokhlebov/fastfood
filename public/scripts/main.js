@@ -1,33 +1,39 @@
 "use strict";
-const basket = [];
 
-showSelectedProductCategory();
+const menuModalCategorylId = ["sizes", "breads", "vegetables", "sauces", "fillings", "sandwichDone"];
+const basket = [];
+let customSandwich = {};
+let indexMenuModal = 0;
+
+selectedProductCategory();
 showBasket();
 
 async function getMenuProduct() {
 
-    try {
+    const url = 'http://localhost:8080/api';
+    const response = await fetch(url);
+    const result = await response.json();
+    const menu = result.menu;
 
-        const url = 'http://localhost:8080/api';
-        const response = await fetch(url);
-        const result = await response.json();
-        const menu = result.menu;
-
-        return menu;
-
-    } catch (err) {
-
-        alert(`Не удалось загрузить список товаров \n ${err}`);
-
-    }
-
+    return menu;
 }
 
-function showSelectedProductCategory() {
+async function getElementProduct(id) {
 
-    let categoriesMenu = document.querySelectorAll('.category');
+    const url = 'http://localhost:8080/api';
+    const response = await fetch(url);
+    const result = await response.json();
+    for (let key in result) {
+        if (key === id) {
+            return result[key]
+        }
+    }
+}
+
+function selectedProductCategory() {
+
+    let categoriesMenu = document.querySelectorAll('.categoryMenu');
     let defaultCategoryId = "pizza";
-    
     for (let category of categoriesMenu) {
         category.addEventListener('click', function () {
             showProducts(category.id);
@@ -76,13 +82,14 @@ async function showProducts(categoryId) {
                         </button>
                     </div>
                     <input class="buttonBuy" type="button" value = "В КОРЗИНУ" 
-                        onclick = "addProductInBasket(${menu[key].id}, ${categoryId}, getQuantityProduct('quantity${menu[key].id}'))">
+                        onclick = "addProductInBasket(${menu[key].id}, ${menu[key].category}, getQuantityProduct('quantity${menu[key].id}'))">
                 </form>
 
             </div>`);
         }
     }
 }
+
 function showBasket() {
 
     showProductFromBasket();
@@ -99,7 +106,7 @@ function showSumOrder() {
     div.id = "basketTotal";
     basketOrder.prepend(div);
 
-    basketTotal.insertAdjacentHTML("afterbegin", /*html*/ `<p> Итого: ${sum} руб. </p>` );
+    basketTotal.insertAdjacentHTML("afterbegin", /*html*/ `<p> Итого: ${sum} руб. </p>`);
 }
 
 function showProductFromBasket() {
@@ -136,17 +143,19 @@ function showProductFromBasket() {
     }
 }
 
-function setQuantityProductInBasket(id, step){
-    for (let key in basket) {
-        if (basket[key].id === id) {
-            basket[key].quantity += Number(step);
-            if(basket[key].quantity <= 0) {
-                removeProductInBasket(id);
-            }
-            showBasket();
-            break;
-        }
+function setQuantityProductInBasket(id, step) {
+    const product = basket.find((product) => product.id === id);
+
+    if (!product) {
+        return;
     }
+    product.quantity += Number(step);
+    if (product.quantity <= 0) {
+        removeProductInBasket(id);
+    }
+
+    showBasket();
+
 }
 
 function removeProductInBasket(id) {
@@ -199,17 +208,19 @@ function addQuantityProductInBasket(id, quantity) {
 }
 
 async function addProductInBasket(id, category, quantity) {
+
     let product = await getElementMenuProduct(id, quantity);
     let productInBasket = checkProductInBasket(id);
-    
-    if (category.id == 'sandwiches'){
-        alert(category.id);
 
-    } else if (productInBasket == true) {
+    if (category.id == 'sandwiches') {
+        customSandwich = product;
+        showModalCreateSandwich();
+    }
+    else if (productInBasket == true) {
 
         addQuantityProductInBasket(id, quantity);
         showBasket();
-        
+
     } else {
 
         basket.push(product);
@@ -219,12 +230,134 @@ async function addProductInBasket(id, category, quantity) {
 
 function getSumOrder() {
     let sum = 0;
-    if(basket.length > 0){
-        for (let key in basket){
+    if (basket.length > 0) {
+        for (let key in basket) {
             sum += basket[key].quantity * basket[key].price;
         }
-    } 
-    return sum; 
+    }
+    return sum;
 }
 
+function showModalCreateSandwich() {
+
+    let div = document.createElement('div');
+    const defultProductMenuId = "sizes";
+
+    div.id = "modalWindow";
+
+    content.after(div);
+
+    modalWindow.insertAdjacentHTML("afterbegin", /*html*/`
+    <div class="modalOverlay" id="modalOverlay"></div>
+        <div class="modalContainer">
+            <div class="modalContent">
+                <button class="closeButton" onclick="removeModalCreateSandwich()">X</button>
+                <button id="backButton" onclick="manageModalButton (-1)">Назад</button>
+                <button id="forwardButton" onclick="manageModalButton (1)">Вперед</button>
+                <ul id="menuModal">
+                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="sizes"><a>Размер</a></li>
+                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="breads"><a>Хлеб</a></li>
+                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="vegetables"><a>Овощи</a></li>
+                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="sauces"><a>Соусы</a></li>
+                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="fillings"><a>Начинка</a></li>
+                    <li onclick="showSandwichDone()" id="sandwichDone">Готово</li>
+                </ul>
+                <div id="productContainer"></div>
+            </div>
+        </div>
+    `);
+
+    showProductMenuModal(defultProductMenuId);
+
+}
+
+function manageModalButton(step) {
+
+    if (indexMenuModal + step <= 0) {
+        indexMenuModal = 0;
+
+    } else if (indexMenuModal + step >= 5) {
+        indexMenuModal = 5;
+
+    } else {
+        indexMenuModal += step;
+    }
+
+    if (menuModalCategorylId[indexMenuModal] == "sandwichDone") {
+        showSandwichDone();
+
+    } else {
+        showProductMenuModal(menuModalCategorylId[indexMenuModal]);
+    }
+}
+
+function showModalButton() {
+
+    if (indexMenuModal == 0) {
+        document.getElementById('backButton').style.visibility = 'hidden';
+        document.getElementById('forwardButton').style.visibility = 'visible';
+    } else if (indexMenuModal == 5) {
+        document.getElementById('forwardButton').style.visibility = 'hidden';
+        document.getElementById('backButton').style.visibility = 'visible';
+    } else {
+        document.getElementById('backButton').style.visibility = 'visible';
+        document.getElementById('forwardButton').style.visibility = 'visible';
+    }
+}
+
+function showSandwichDone() {
+
+    productContainer.remove();
+    indexMenuModal = menuModalCategorylId.findIndex(category => category === "sandwichDone");
+
+    let div = document.createElement('div');
+
+    div.id = "productContainer";
+
+    menuModal.after(div);
+
+    productContainer.insertAdjacentHTML("afterbegin", /*html*/`
+        <div class="product">
+        <img class="foodPicture" src="${customSandwich.image}">
+
+        <div class="foodName">${customSandwich.name}</div>
+
+        <p class="foodPrice">Цена: ${customSandwich.price} руб.</p>
+
+    </div>
+    `);
+    showModalButton();
+}
+
+async function showProductMenuModal(id) {
+
+    productContainer.remove();
+
+    indexMenuModal = menuModalCategorylId.findIndex(category => category === id);
+
+    let products = await getElementProduct(id);
+    let div = document.createElement('div');
+
+    div.id = "productContainer";
+
+    menuModal.after(div);
+
+    for (let key in products) {
+        productContainer.insertAdjacentHTML("afterbegin", /*html*/`
+        <div class="product">
+        <img class="foodPicture" src="${products[key].image}">
+
+        <div class="foodName">${products[key].name}</div>
+
+        <p class="foodPrice">Цена: ${products[key].price} руб.</p>
+
+    </div>
+    `);
+    }
+    showModalButton();
+}
+
+function removeModalCreateSandwich() {
+    modalWindow.remove();
+}
 
