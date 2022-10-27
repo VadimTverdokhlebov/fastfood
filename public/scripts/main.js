@@ -4,6 +4,7 @@ const menuModalCategorylId = ["sizes", "breads", "vegetables", "sauces", "fillin
 const basket = [];
 let customSandwich = {};
 let indexMenuModal = 0;
+let previousElementModalMenu = "sizes";
 
 selectedProductCategory();
 showBasket();
@@ -317,25 +318,29 @@ function showSandwichDone() {
     menuModal.after(div);
 
     productContainer.insertAdjacentHTML("afterbegin", /*html*/`
-        <div class="product">
-        <img class="foodPicture" src="${customSandwich.image}">
+        <div>
+        <img src="${customSandwich.image}">
 
-        <div class="foodName">${customSandwich.name}</div>
+        <div>${customSandwich.name}</div>
 
-        <p class="foodPrice">Цена: ${customSandwich.price} руб.</p>
+        <p>Цена: ${customSandwich.price} руб.</p>
 
     </div>
     `);
     showModalButton();
+    document.getElementById('sandwichDone').style.background = 'rgb(235, 74, 52)';
+    document.getElementById(previousElementModalMenu).style.background = 'white';
+    
+    previousElementModalMenu = 'sandwichDone';
 }
 
-async function showProductMenuModal(id) {
+async function showProductMenuModal(categoryId) {
 
     productContainer.remove();
 
-    indexMenuModal = menuModalCategorylId.findIndex(category => category === id);
+    indexMenuModal = menuModalCategorylId.findIndex(category => category === categoryId);
 
-    let products = await getElementProduct(id);
+    let products = await getElementProduct(categoryId);
     let div = document.createElement('div');
 
     div.id = "productContainer";
@@ -344,17 +349,21 @@ async function showProductMenuModal(id) {
 
     for (let key in products) {
         productContainer.insertAdjacentHTML("afterbegin", /*html*/`
-        <div class="product">
-        <img class="foodPicture" src="${products[key].image}">
+        <div class="modalProductCard">
+        <img src="${products[key].image}">
 
-        <div class="foodName">${products[key].name}</div>
+        <div>${products[key].name}</div>
 
-        <p class="foodPrice">Цена: ${products[key].price} руб.</p>
+        <p>Цена: ${products[key].price} руб.</p>
 
     </div>
     `);
     }
     showModalButton();
+    document.getElementById(previousElementModalMenu).style.background = 'white';
+    document.getElementById(categoryId).style.background = 'rgb(235, 74, 52)';
+    
+    previousElementModalMenu = categoryId;
 }
 
 function removeModalCreateSandwich() {
