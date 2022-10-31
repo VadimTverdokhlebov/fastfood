@@ -9,24 +9,49 @@ let previousElementModalMenu = "sizes";
 selectedProductCategory();
 showBasket();
 
-async function getMenuProduct() {
-
+async function getJson(){
     const url = 'http://localhost:8080/api';
     const response = await fetch(url);
     const result = await response.json();
-    const menu = result.menu;
 
-    return menu;
+    return result;
 }
 
-async function getElementProduct(id) {
+async function getMenuProduct() {
+    const result = await getJson();
+    
+    return result.menu;
+}
 
-    const url = 'http://localhost:8080/api';
-    const response = await fetch(url);
-    const result = await response.json();
+async function getElementProduct(idCategory) {
+    const result = await getJson();
+
     for (let key in result) {
-        if (key === id) {
-            return result[key]
+        if (key === idCategory) {
+            return result[key];
+        }
+    }
+}
+
+async function getElementCustomSandwich(keyProduct) {
+    const result = await getJson();
+
+    let map = new Map();
+    let categoryMap = new Map();
+
+    for (let keyCategory in result) {
+        for (let key in result[keyCategory]) {
+
+            if (key === keyProduct) {
+
+                map.set(keyProduct, result[keyCategory][key]);
+                let product = Object.fromEntries(map.entries());
+
+                categoryMap.set(keyCategory, product);
+                let productCategory = Object.fromEntries(categoryMap.entries());
+
+                return productCategory;
+            }
         }
     }
 }
@@ -43,6 +68,8 @@ function selectedProductCategory() {
 
     showProducts(defaultCategoryId);
 }
+
+
 
 async function showProducts(categoryId) {
 
@@ -256,11 +283,11 @@ function showModalCreateSandwich() {
                 <button id="backButton" onclick="manageModalButton (-1)">Назад</button>
                 <button id="forwardButton" onclick="manageModalButton (1)">Вперед</button>
                 <ul id="menuModal">
-                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="sizes"><a>Размер</a></li>
-                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="breads"><a>Хлеб</a></li>
-                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="vegetables"><a>Овощи</a></li>
-                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="sauces"><a>Соусы</a></li>
-                    <li onclick="showProductMenuModal(this.id)" class="categoryMenuModal" id="fillings"><a>Начинка</a></li>
+                    <li  class="categoryMenuModal" id="sizes"><a>Размер</a></li>
+                    <li  class="categoryMenuModal" id="breads"><a>Хлеб</a></li>
+                    <li  class="categoryMenuModal" id="vegetables"><a>Овощи</a></li>
+                    <li  class="categoryMenuModal" id="sauces"><a>Соусы</a></li>
+                    <li  class="categoryMenuModal" id="fillings"><a>Начинка</a></li>
                     <li onclick="showSandwichDone()" id="sandwichDone">Готово</li>
                 </ul>
                 <div id="productContainer"></div>
@@ -269,7 +296,20 @@ function showModalCreateSandwich() {
     `);
 
     showProductMenuModal(defultProductMenuId);
+    selectCategoryMenuModal();
 
+}
+function selectCategoryMenuModal() {
+    let categories = document.querySelectorAll('.categoryMenuModal');
+    
+    for (let category of categories) {
+        
+        category.addEventListener('click', function () {
+
+            showProductMenuModal(category.id);
+
+        })
+    }
 }
 
 function manageModalButton(step) {
@@ -289,6 +329,7 @@ function manageModalButton(step) {
 
     } else {
         showProductMenuModal(menuModalCategorylId[indexMenuModal]);
+        
     }
 }
 
@@ -330,7 +371,7 @@ function showSandwichDone() {
     showModalButton();
     document.getElementById('sandwichDone').style.background = 'rgb(235, 74, 52)';
     document.getElementById(previousElementModalMenu).style.background = 'white';
-    
+
     previousElementModalMenu = 'sandwichDone';
 }
 
@@ -346,10 +387,11 @@ async function showProductMenuModal(categoryId) {
     div.id = "productContainer";
 
     menuModal.after(div);
-
+   
     for (let key in products) {
+
         productContainer.insertAdjacentHTML("afterbegin", /*html*/`
-        <div class="modalProductCard">
+        <div class="modalProductCard" id="${key}">
         <img src="${products[key].image}">
 
         <div>${products[key].name}</div>
@@ -360,9 +402,10 @@ async function showProductMenuModal(categoryId) {
     `);
     }
     showModalButton();
+    selectProductModal();
     document.getElementById(previousElementModalMenu).style.background = 'white';
     document.getElementById(categoryId).style.background = 'rgb(235, 74, 52)';
-    
+
     previousElementModalMenu = categoryId;
 }
 
@@ -370,3 +413,26 @@ function removeModalCreateSandwich() {
     modalWindow.remove();
 }
 
+function selectProductModal() {
+    let products = document.querySelectorAll('.modalProductCard');
+    
+    for (let product of products) {
+        
+        product.addEventListener('click', function () {
+
+            addProductIncustomSandwich(product.id);
+
+        })
+    }
+}
+
+async function addProductIncustomSandwich(id) {
+    let product = await getElementCustomSandwich(id);
+    
+    customSandwich.components = Object.assign(customSandwich.components, product);
+    let map = new Map(Object.entries(customSandwich));
+    //console.log(product);
+    console.log(customSandwich);
+    console.log(map);
+
+}

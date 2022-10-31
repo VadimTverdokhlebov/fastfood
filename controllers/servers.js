@@ -2,7 +2,7 @@
 
 import fs from 'fs'
 
-let dataProduct = fs.readFileSync('data2.json')
+let dataProduct = fs.readFileSync('data.json')
 let product = JSON.parse(dataProduct)
 
 
