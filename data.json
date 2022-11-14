@@ -11,8 +11,8 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": {},
-                "bread": "whit-italian",
+                "size": "1x",
+                "bread": "white-italian",
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
@@ -1287,7 +1287,7 @@
             "id": 107
         }
     ],
-    "fillings": {
+    "filling": {
         "bacon": {
             "name": "Бекон",
             "description": "(3-4 кусочка)",
@@ -1305,12 +1305,6 @@
             "description": "(2 треугольника)",
             "price": 20,
             "image": "/i/ingredients/products/cheese.png"
-        },
-        "moc": {
-            "name": "Моцарелла",
-            "description": "(1 скуп)",
-            "price": 20,
-            "image": "/i/ingredients/products/moc.png"
         },
         "chicken-breast": {
             "name": "Куриная грудка",
@@ -1335,6 +1329,12 @@
             "description": "",
             "price": 70,
             "image": "/i/ingredients/products/melt.png"
+        },
+        "moc": {
+            "name": "Моцарелла",
+            "description": "(1 скуп)",
+            "price": 20,
+            "image": "/i/ingredients/products/cheese.png"
         },
         "mushrooms": {
             "name": "Грибы",
@@ -1430,7 +1430,7 @@
             "name": "чесночный",
             "short_name": "чесночный"
         },
-        "sweet-and-sour": {
+        "sweet-and-sourr": {
             "name": "кисло-сладкий",
             "short_name": "кисло-сладкий"
         },
@@ -1442,8 +1442,9 @@
             "name": "барбекю",
             "short_name": "барбекю"
         }
+
     },
-    "sizes": {
+    "size": {
         "1x": {
             "name": "15 См",
             "price": 0,
@@ -1455,7 +1456,7 @@
             "image": "/i/sizes/2x.jpg"
         }
     },
-    "breads": {
+    "bread": {
         "white-italian": {
             "name": "Белый итальянский",
             "description": "",
@@ -1487,7 +1488,7 @@
             "image": "/i/bread/grey-with-cereal.png"
         }
     },
-    "vegetables": {
+    "vegetable": {
         "pekinka": {
             "name": "Пекинская капуста",
             "description": "",
@@ -1531,7 +1532,7 @@
             "image": "/i/ingredients/vegetables/pepper-hapapeno.png"
         }
     },
-    "sauces": {
+    "sauce": {
         "1000-islands": {
             "name": "1000 Островов",
             "description": "",

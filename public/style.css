@@ -171,10 +171,13 @@ button {
 }
 
 .foodPicture {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: auto;
     width: 200px;
     height: 200px;
-    display: block;
     border-radius: 50%;
     border: 10px solid var(--light-yelloy-color);
     background-color: white;
@@ -341,5 +344,35 @@ button {
     margin: 10px;
     width: 300px;
     height: 300px;
+    text-align: center;
+    border-radius: 10px;
     border: 1px solid black;
+}
+
+.listComponentSandwiches {
+    padding: 5px;
+}
+
+#customSandwichContainer {
+    margin: 20px; 
+    border-bottom: 1px solid black;
+}
+#yourSandwichIsDone {
+    font-size: 24px;
+    border-bottom: 1px solid black;
+}
+.customSandwichPreview {
+    margin: 20px;
+    text-align: center;
+}
+#orderCustomSandwich {
+    margin: 20px;
+    text-align: center;
+
+}
+.doneProductContainer {
+    display: grid;
+}
+.customSandwichMenu {
+    display: flex;
 }
