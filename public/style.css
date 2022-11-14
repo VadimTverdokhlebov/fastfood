@@ -376,3 +376,19 @@ button {
 .customSandwichMenu {
     display: flex;
 }
+
+#backButton {
+    width: 60px;
+    height: 30px;
+    border-radius: 4px;
+    color: white;
+    background-color: rgb(214, 18, 18);
+}
+
+#forwardButton{
+    width: 60px;
+    height: 30px;
+    border-radius: 4px;
+    color: white;
+    background-color: rgb(214, 18, 18);
+}
