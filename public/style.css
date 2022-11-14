@@ -381,14 +381,17 @@ button {
     width: 60px;
     height: 30px;
     border-radius: 4px;
+    float: left;
     color: white;
-    background-color: rgb(214, 18, 18);
+    background-color: rgb(235, 74, 52);
 }
 
 #forwardButton{
     width: 60px;
     height: 30px;
+
+    float: right;
     border-radius: 4px;
     color: white;
-    background-color: rgb(214, 18, 18);
+    background-color: rgb(235, 74, 52);
 }

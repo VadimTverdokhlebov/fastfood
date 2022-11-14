@@ -91,10 +91,10 @@ async function showProducts(categoryId) {
         if (menu[key].category == categoryId) {
             content.insertAdjacentHTML("afterbegin", /*html*/
                 `<div class="product">
-                <img class="foodLogo" src="i/markets/subway_logo.png">
-                <div class="foodPicture">
-                    <img src="${menu[key].image}">
-                </div>
+                <img class="foodLogo" src="images/markets/subway_logo.png">
+                
+                    <img class="foodPicture"src="${menu[key].image}">
+                
                 <div class="foodName">${menu[key].name}</div>
 
                 <div class="foodLine">
@@ -107,13 +107,13 @@ async function showProducts(categoryId) {
                 <form class="formAddBasket" id="addBasket" method="POST">
                     <div class="foodCounter">
                         <button type="button" onclick="this.nextElementSibling.stepDown()">
-                            <img alt="minus" src="i/minus.png" class="buttonMinus"/>
+                            <img alt="minus" src="images/minus.png" class="buttonMinus"/>
                         </button>
 
                         <input class="quantity" id="quantity${menu[key].id}" type="number" min="1" max="20" value="1" readonly>
 
                         <button type="button" onclick="this.previousElementSibling.stepUp()">
-                            <img alt="plus" src="i/plus.png" class="buttonPlus"/>
+                            <img alt="plus" src="images/plus.png" class="buttonPlus"/>
                         </button>
                     </div>
                     <input class="buttonBuy" type="button" value = "В КОРЗИНУ" 
@@ -158,19 +158,19 @@ function showProductFromBasket() {
         <div class="basketProduct" id="positionProductInBasket${basket[key].id}">
 
             <button type="button" id="idProductInBasket${basket[key].id}" onclick="removeProductInBasket(${basket[key].id})">
-                <img src="i/vcsconflicting_93497.png" class="buttonDelete"/>
+                <img src="images/vcsconflicting_93497.png" class="buttonDelete"/>
             </button>
             
             <p>${basket[key].name}</p>
             
             <button type="button" onclick="setQuantityProductInBasket(${basket[key].id}, -1)">
-                <img alt="minus" src="i/minus.png" class="buttonMinus"/>
+                <img alt="minus" src="images/minus.png" class="buttonMinus"/>
             </button>
 
                 <input class="quantity" type="number" min="1" max="20" value="${basket[key].quantity}" readonly>
 
             <button type="button" onclick="setQuantityProductInBasket(${basket[key].id}, 1)">
-                <img alt="plus" src="i/plus.png" class="buttonPlus"/>
+                <img alt="plus" src="images/plus.png" class="buttonPlus"/>
             </button>
 
         </div>
@@ -290,8 +290,7 @@ function showModalCreateSandwich() {
         <div class="modalContainer">
             <div class="modalContent">
                 <button class="closeButton" onclick="removeModalCreateSandwich()">X</button>
-                <button id="backButton" onclick="manageModalButton (-1)">Назад</button>
-                <button id="forwardButton" onclick="manageModalButton (1)">Вперед</button>
+                <div id="navMenuModal">
                 <ul id="menuModal">
                     <li  class="categoryMenuModal" id="size"><a>Размер</a></li>
                     <li  class="categoryMenuModal" id="bread"><a>Хлеб</a></li>
@@ -300,6 +299,9 @@ function showModalCreateSandwich() {
                     <li  class="categoryMenuModal" id="filling"><a>Начинка</a></li>
                     <li onclick="showSandwichDone()" id="sandwichDone">Готово</li>
                 </ul>
+                <button id="backButton" onclick="manageModalButton (-1)">Назад</button>
+                <button id="forwardButton" onclick="manageModalButton (1)">Вперед</button>
+                </div>
                 <div id="productContainer"></div>
                 
             </div>
@@ -369,7 +371,7 @@ function showSandwichDone() {
 
     div.id = "productContainer";
 
-    menuModal.after(div);
+    navMenuModal.after(div);
 
     productContainer.insertAdjacentHTML("afterbegin", /*html*/`
     <div class="doneProductContainer">
@@ -422,7 +424,7 @@ async function showProductMenuModal(categoryId) {
 
     div.id = "productContainer";
 
-    menuModal.after(div);
+    navMenuModal.after(div);
 
     for (let key in products) {
 
